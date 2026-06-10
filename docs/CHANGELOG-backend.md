@@ -1,0 +1,9 @@
+﻿# Changelog — Backend ([repo](https://github.com/atiz-official/drease-v4-backend))
+
+_อัปเดตล่าสุด: 2026-06-10 17:49_ — กลับไป [ตารางรวม](CHANGELOG.md)
+
+| วันที่ | Hash | ผู้แก้ | Branch | รายละเอียด |
+|---|---|---|---|---|
+| 2026-06-10 | `5fc3b7c` | FormDev | `master` | remove Redis |
+| 2026-06-09 | `b14c780` | FormDev | `master` | Fix: name of DB, table and code ref |
+| 2026-06-09 | `6178d34` | FormDev | `master` | first commit |
