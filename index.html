@@ -40,7 +40,7 @@
   nav a.doc.active { background: #1f3a5f; color: #fff; }
   nav a.doc small { color: var(--muted); display: block; font-size: 0.75rem; line-height: 1.3; }
 
-  main { flex: 1; min-width: 0; padding: 40px 48px 80px; max-width: 980px; }
+  main { flex: 1; min-width: 0; padding: 40px 48px 80px; max-width: 1280px; }
   #status { color: var(--muted); padding: 40px 0; text-align: center; }
 
   /* ---- rendered markdown ---- */
@@ -63,19 +63,16 @@
   #content pre code { background: none; padding: 0; }
   #content table {
     border-collapse: collapse; margin-bottom: 1.2em; width: 100%;
-    display: block; overflow-x: auto; font-size: 0.92rem;
+    table-layout: auto; font-size: 0.92rem;
   }
-  #content th, #content td { border: 1px solid var(--border); padding: 7px 12px; text-align: left; }
-  #content table { width: 100%; } /* ตารางพอดีกรอบ ไม่ล้นจนถูกตัด */
+  #content th, #content td { border: 1px solid var(--border); padding: 7px 12px; text-align: left; vertical-align: top; }
   #content td:first-child, #content th:first-child { white-space: nowrap; } /* วันที่-เวลา อยู่บรรทัดเดียว */
-  #content td code { white-space: nowrap; } /* hash ไม่หักบรรทัด */
-  /* ตาราง changelog: ผู้แก้ (คอลัมน์ 4) อยู่บรรทัดเดียว */
-  #content td:nth-child(4), #content th:nth-child(4) { white-space: nowrap; }
-  /* branch (คอลัมน์ 5) พับได้ แต่ให้ที่กว้างขึ้นอีกนิด */
+  #content td:nth-child(4), #content th:nth-child(4) { white-space: nowrap; } /* ผู้แก้ อยู่บรรทัดเดียว */
+  #content td:nth-child(3) code { white-space: nowrap; } /* hash ไม่หักบรรทัด */
+  /* branch (คอลัมน์ 5) พับได้ถ้ายาว */
   #content td:nth-child(5) code { white-space: normal; }
-  #content td:nth-child(5), #content th:nth-child(5) { min-width: 150px; }
-  /* รายละเอียด (คอลัมน์ 6) เป็นคอลัมน์ยืดหยุ่น ขยายให้กว้างขึ้น */
-  #content td:nth-child(6), #content th:nth-child(6) { min-width: 380px; }
+  /* รายละเอียด (คอลัมน์ 6) กว้างสุด กินที่เหลือทั้งหมด */
+  #content td:nth-child(6), #content th:nth-child(6) { width: 45%; }
 
   /* badge สีแยกโปรเจ็คในตาราง changelog */
   .proj-badge {
