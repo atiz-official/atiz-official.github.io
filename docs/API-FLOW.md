@@ -2,7 +2,7 @@
 
 เอกสารนี้เล่าว่าเกิดอะไรขึ้นบ้างตั้งแต่ user กรอกรหัสผ่านหน้าจอ จนถึงคำตอบกลับมาแสดงผล และอธิบายว่ากลไก **multi-tenant** (หลายคลินิกใช้ DB เดียวกันโดยมองไม่เห็นข้อมูลกันข้ามคลินิก) ทำงานยังไง — อ่านคู่กับ [BACKEND.md](BACKEND.md) (โครงสร้าง) และ [API-CONTRACT.md](API-CONTRACT.md) (รายการ endpoint)
 
-_อัปเดตล่าสุด: 2026-06-11 — อิงโค้ดจริง backend @`c85e683` (`feat/auth-complete` — auth สองชั้น X-App-Key + JWT), frontend @`e5a2723`_
+_อัปเดตล่าสุด: 2026-06-11 — อิงโค้ดจริง backend @`3a9f333` (`feat/auth-complete` — auth สองชั้น X-App-Key + JWT, PR #2), frontend @`6903b20` (`frontend/react-spa-scaffold` — แนบ X-App-Key แล้ว)_
 
 ## ภาพรวมทั้งเส้นทาง
 
@@ -81,11 +81,13 @@ sequenceDiagram
 
 ```
 GET /api/patient/search?q=สมหญิง
-X-App-Key: web:Kx8f...                          ← บัตรใบที่ 1 (ของแอป — ค่าเดียวทุกเส้น)
+X-App-Key: Kx8fT3mQz9                           ← บัตรใบที่ 1 (ของแอป — ค่าเดียวทุกเส้น)
 Authorization: Bearer eyJhbGciOiJIUzI1NiIs...   ← บัตรใบที่ 2 (ของคน — แนบให้เองทุกเส้น)
 ```
 
-> 📋 **งานฝั่ง frontend ที่ตามมา:** เพิ่มการแนบ `X-App-Key` ใน `apiClient.ts` (ค่าจาก env ตอน build) — ระหว่างที่ยังไม่ส่ง backend อยู่ในโหมด log-only จึงยังใช้งานได้ปกติ
+> ค่าใน header คือ key ดิบ — ส่วนรูปแบบ `web:Kx8f...` (channel:key) ใช้เฉพาะตอนตั้งค่า `APP_KEYS` ฝั่ง backend เพื่อบอกว่า key ไหนเป็นของแอปไหน
+>
+> ✅ **frontend แนบแล้ว** (`6903b20`): `apiClient.ts` อ่าน `VITE_APP_KEY` ตอน build แล้วใส่เป็น default header — ถ้าไม่ตั้งค่า backend โหมด log-only ยังให้ผ่าน (มี console.warn เตือนใน production build)
 
 ## ตอนที่ 3 — backend รับ request: ด่านตรวจ 5 ชั้น
 

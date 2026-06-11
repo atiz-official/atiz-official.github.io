@@ -2,7 +2,7 @@
 
 เอกสารนี้อธิบายโครงสร้างภายในของ `drease-v4-backend` ให้คนที่ดู control repo เข้าใจว่าหลังบ้านวางโครงยังไง ทำงานทีละขั้นยังไง และมีตารางฐานข้อมูลอะไรบ้าง — สำหรับรายการ endpoint ดู [API-CONTRACT.md](API-CONTRACT.md)
 
-_อัปเดตล่าสุด: 2026-06-11 — อิงโค้ดที่ commit `c85e683` (`feat/auth-complete` — auth สองชั้น X-App-Key + JWT + rate limit)_
+_อัปเดตล่าสุด: 2026-06-11 — อิงโค้ดที่ commit `3a9f333` (`feat/auth-complete` — auth สองชั้น X-App-Key + JWT + rate limit + CORS allow X-App-Key, PR #2)_
 
 ## Stack
 

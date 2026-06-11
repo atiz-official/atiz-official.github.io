@@ -3,7 +3,7 @@
 ตารางกลางบอกว่า endpoint ไหน **backend มีแล้ว / frontend เรียกแล้ว / เชื่อมถึงกันหรือยัง** — ครบทุกเส้น
 อัปเดตด้วยมือเมื่อมีการเพิ่ม route (backend: `internal/router/router.go`, frontend: `src/services/*.ts`)
 
-_อัปเดตล่าสุด: 2026-06-11 — backend @`c85e683` (`feat/auth-complete` — auth สองชั้น X-App-Key + JWT และ rate limit ครบทุกเส้น), frontend @`e5a2723` (master)_
+_อัปเดตล่าสุด: 2026-06-11 — backend @`3a9f333` (`feat/auth-complete` — auth สองชั้น X-App-Key + JWT และ rate limit ครบทุกเส้น, PR #2 รอ merge), frontend @`6903b20` (`frontend/react-spa-scaffold` — แนบ X-App-Key แล้ว)_
 
 สถานะ: ✅ เชื่อมแล้ว | 🟡 backend มีแต่ frontend ยังไม่เรียก | 🔴 frontend เรียกแต่ backend ยังไม่มี
 

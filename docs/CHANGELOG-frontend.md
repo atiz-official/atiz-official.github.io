@@ -1,9 +1,10 @@
 ﻿# Changelog — Frontend ([repo](https://github.com/atiz-official/drease-v4-frontend))
 
-_อัปเดตล่าสุด: 2026-06-11 15:17_ — กลับไป [ตารางรวม](CHANGELOG.md)
+_อัปเดตล่าสุด: 2026-06-11 15:24_ — กลับไป [ตารางรวม](CHANGELOG.md)
 
 | วันที่-เวลา | Hash | ผู้แก้ | Branch | รายละเอียด |
 |---|---|---|---|---|
+| 2026-06-11 15:19 | `6903b20` | tanyarat-atiz | `frontend/react-spa-scaffold` | feat(auth): attach X-App-Key app card to every API request |
 | 2026-06-11 10:43 | `2842299` | AomDev | `master` | test: frontend push should appear on the website automatically |
 | 2026-06-11 10:41 | `01d51d1` | AomDev | `master` | ci: print HTTP status + response in notify workflow for debugging |
 | 2026-06-11 10:29 | `e5a2723` | AomDev | `master` | merge: frontend/react-spa-scaffold -> master (recall rebuild + reports batch 1-2) |

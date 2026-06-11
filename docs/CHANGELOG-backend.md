@@ -1,9 +1,10 @@
 ﻿# Changelog — Backend ([repo](https://github.com/atiz-official/drease-v4-backend))
 
-_อัปเดตล่าสุด: 2026-06-11 15:17_ — กลับไป [ตารางรวม](CHANGELOG.md)
+_อัปเดตล่าสุด: 2026-06-11 15:24_ — กลับไป [ตารางรวม](CHANGELOG.md)
 
 | วันที่-เวลา | Hash | ผู้แก้ | Branch | รายละเอียด |
 |---|---|---|---|---|
+| 2026-06-11 15:23 | `c86f759` | tanyarat-atiz | `feat/auth-complete` | feat(patient+appointment): complete concept port - CRUD, address lookups, calendar, cross-reservation (Tasks 4-5) |
 | 2026-06-11 15:17 | `3a9f333` | tanyarat-atiz | `feat/auth-complete` | fix(cors): allow X-App-Key in preflight so browsers can send the app card |
 | 2026-06-11 15:09 | `c85e683` | tanyarat-atiz | `feat/auth-complete` | feat(auth): two-card auth - X-App-Key app layer + per-user rate limiting |
 | 2026-06-11 14:35 | `8dc227b` | tanyarat-atiz | `master` | feat(security): rate-limit POST /login (10 req/min per IP) |
