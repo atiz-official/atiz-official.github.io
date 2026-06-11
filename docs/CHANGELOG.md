@@ -3,10 +3,12 @@
 รวม git log ของทั้ง 2 โปรเจ็คในตารางเดียว (ล่าสุดอยู่บนสุด) — generate ด้วย `scripts\update-log.ps1`
 แยกรายโปรเจ็ค: [Backend](CHANGELOG-backend.md) | [Frontend](CHANGELOG-frontend.md)
 
-_อัปเดตล่าสุด: 2026-06-11 10:33_
+_อัปเดตล่าสุด: 2026-06-11 10:39_
 
 | วันที่ | โปรเจ็ค | Hash | ผู้แก้ | Branch | รายละเอียด |
 |---|---|---|---|---|---|
+| 2026-06-11 | Backend | `cbbb518` | AomDev | `master` | ci: print HTTP status + response in notify workflow for debugging |
+| 2026-06-11 | Backend | `6b7b9c5` | AomDev | `master` | test: verify notify-to-website pipeline end to end |
 | 2026-06-11 | Frontend | `e5a2723` | AomDev | `master` | merge: frontend/react-spa-scaffold -> master (recall rebuild + reports batch 1-2) |
 | 2026-06-11 | Frontend | `fa5cce3` | tanyarat-atiz | `frontend/react-spa-scaffold` | feat(recall): rebuild Recall page with scene KPI cards + filter grid (v3 layout) + reports polish |
 | 2026-06-11 | Backend | `c96819c` | AomDev | `master` | test: trigger realtime docs pipeline |

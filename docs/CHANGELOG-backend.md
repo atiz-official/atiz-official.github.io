@@ -1,9 +1,11 @@
 ﻿# Changelog — Backend ([repo](https://github.com/atiz-official/drease-v4-backend))
 
-_อัปเดตล่าสุด: 2026-06-11 10:33_ — กลับไป [ตารางรวม](CHANGELOG.md)
+_อัปเดตล่าสุด: 2026-06-11 10:39_ — กลับไป [ตารางรวม](CHANGELOG.md)
 
 | วันที่ | Hash | ผู้แก้ | Branch | รายละเอียด |
 |---|---|---|---|---|
+| 2026-06-11 | `cbbb518` | AomDev | `master` | ci: print HTTP status + response in notify workflow for debugging |
+| 2026-06-11 | `6b7b9c5` | AomDev | `master` | test: verify notify-to-website pipeline end to end |
 | 2026-06-11 | `c96819c` | AomDev | `master` | test: trigger realtime docs pipeline |
 | 2026-06-11 | `b247287` | AomDev | `master` | ci: notify control repo on every push |
 | 2026-06-10 | `95a9e64` | FormDev | `master` | Revert "remove Redis" |
