@@ -66,6 +66,8 @@
     display: block; overflow-x: auto; font-size: 0.92rem;
   }
   #content th, #content td { border: 1px solid var(--border); padding: 7px 12px; text-align: left; }
+  #content td:first-child, #content th:first-child { white-space: nowrap; } /* วันที่-เวลา อยู่บรรทัดเดียว */
+  #content td code { white-space: nowrap; } /* hash / branch ไม่หักบรรทัด */
   #content th { background: var(--panel); }
   #content tr:nth-child(even) { background: #11151b; }
   #content blockquote { border-left: 3px solid var(--accent); padding-left: 14px; color: var(--muted); margin-bottom: 1em; }
