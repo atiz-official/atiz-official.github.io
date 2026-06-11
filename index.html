@@ -68,6 +68,14 @@
   #content th, #content td { border: 1px solid var(--border); padding: 7px 12px; text-align: left; }
   #content td:first-child, #content th:first-child { white-space: nowrap; } /* วันที่-เวลา อยู่บรรทัดเดียว */
   #content td code { white-space: nowrap; } /* hash / branch ไม่หักบรรทัด */
+
+  /* badge สีแยกโปรเจ็คในตาราง changelog */
+  .proj-badge {
+    display: inline-block; padding: 2px 12px; border-radius: 999px;
+    font-size: 0.82rem; font-weight: 600; white-space: nowrap;
+  }
+  .proj-badge.frontend { background: rgba(68,147,248,0.15); color: #6cb0ff; border: 1px solid rgba(68,147,248,0.4); }
+  .proj-badge.backend  { background: rgba(63,185,80,0.15);  color: #56d364; border: 1px solid rgba(63,185,80,0.4); }
   #content th { background: var(--panel); }
   #content tr:nth-child(even) { background: #11151b; }
   #content blockquote { border-left: 3px solid var(--accent); padding-left: 14px; color: var(--muted); margin-bottom: 1em; }
@@ -127,6 +135,20 @@ async function load(key) {
 
     // รูปที่โหลดไม่ได้ (เช่น badge ของ repo private) — ซ่อนทิ้ง
     content.querySelectorAll("img").forEach(img => img.onerror = () => img.remove());
+
+    // คอลัมน์โปรเจ็คในตาราง changelog → ทำเป็น badge สีแยก (Frontend ฟ้า / Backend เขียว)
+    content.querySelectorAll("table").forEach(table => {
+      const headers = [...table.querySelectorAll("thead th")].map(th => th.textContent.trim());
+      const col = headers.indexOf("โปรเจ็ค");
+      if (col === -1) return;
+      table.querySelectorAll("tbody tr").forEach(tr => {
+        const cell = tr.children[col];
+        if (!cell) return;
+        const name = cell.textContent.trim();
+        const cls = name === "Frontend" ? "frontend" : name === "Backend" ? "backend" : "";
+        if (cls) cell.innerHTML = `<span class="proj-badge ${cls}">${name}</span>`;
+      });
+    });
 
     // ลิงก์ .md ภายใน → เปิดในตัวอ่านนี้แทน
     content.querySelectorAll("a").forEach(a => {
