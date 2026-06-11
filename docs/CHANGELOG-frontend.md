@@ -1,6 +1,6 @@
 ﻿# Changelog — Frontend ([repo](https://github.com/atiz-official/drease-v4-frontend))
 
-_อัปเดตล่าสุด: 2026-06-11 10:48_ — กลับไป [ตารางรวม](CHANGELOG.md)
+_อัปเดตล่าสุด: 2026-06-11 13:15_ — กลับไป [ตารางรวม](CHANGELOG.md)
 
 | วันที่-เวลา | Hash | ผู้แก้ | Branch | รายละเอียด |
 |---|---|---|---|---|

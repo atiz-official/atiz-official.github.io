@@ -3,10 +3,12 @@
 รวม git log ของทั้ง 2 โปรเจ็คในตารางเดียว (ล่าสุดอยู่บนสุด) — generate ด้วย `scripts\update-log.ps1`
 แยกรายโปรเจ็ค: [Backend](CHANGELOG-backend.md) | [Frontend](CHANGELOG-frontend.md)
 
-_อัปเดตล่าสุด: 2026-06-11 10:48_
+_อัปเดตล่าสุด: 2026-06-11 13:15_
 
 | วันที่-เวลา | โปรเจ็ค | Hash | ผู้แก้ | Branch | รายละเอียด |
 |---|---|---|---|---|---|
+| 2026-06-11 13:13 | Backend | `bfce954` | tanyarat-atiz | `feat/auth-complete` | Merge remote-tracking branch 'origin/master' into feat/auth-complete |
+| 2026-06-11 12:55 | Backend | `6e42136` | tanyarat-atiz | `feat/auth-complete` | feat(tenant): clinic_code isolation - migration 0039, JWT claim, TenantScope, Phase 1 query scoping |
 | 2026-06-11 10:43 | Frontend | `2842299` | AomDev | `master` | test: frontend push should appear on the website automatically |
 | 2026-06-11 10:41 | Frontend | `01d51d1` | AomDev | `master` | ci: print HTTP status + response in notify workflow for debugging |
 | 2026-06-11 10:38 | Backend | `cbbb518` | AomDev | `master` | ci: print HTTP status + response in notify workflow for debugging |
@@ -38,7 +40,7 @@ _อัปเดตล่าสุด: 2026-06-11 10:48_
 | 2026-06-09 14:00 | Frontend | `5260559` | tanyarat-atiz | `master` | feat(opd): port OPD / SOAP note editor from blade (Tier 1) |
 | 2026-06-09 13:36 | Frontend | `db7a782` | tanyarat-atiz | `master` | docs(frontend): rewrite for feature-based + tenant architecture |
 | 2026-06-09 13:35 | Frontend | `12d5982` | tanyarat-atiz | `master` | chore: remove legacy clutter (mockups, screenshots, CHATGPT.md) |
-| 2026-06-09 13:27 | Backend | `6178d34` | FormDev | `master` | first commit |
+| 2026-06-09 13:27 | Backend | `6178d34` | FormDev | `feat/auth-complete` | first commit |
 | 2026-06-09 10:45 | Frontend | `edfd80a` | tanyarat-atiz | `master` | refactor(architecture): Phase 3 — move entry into app/ (router, main, split App) |
 | 2026-06-09 10:35 | Frontend | `426b0af` | tanyarat-atiz | `master` | refactor(architecture): Phase 2 — move pages/data into features/ |
 | 2026-06-09 10:26 | Frontend | `e88ce68` | tanyarat-atiz | `master` | refactor(architecture): Phase 0+1 — tenant layer + shared module |
