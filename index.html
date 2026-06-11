@@ -89,6 +89,32 @@
   #content em { color: var(--muted); }
   #content .mermaid { display: flex; justify-content: center; margin: 1.2em 0; }
 
+  /* ---- จอ login ---- */
+  #lock {
+    position: fixed; inset: 0; z-index: 50; background: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+  }
+  #lock .box {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 14px;
+    padding: 36px 40px; width: 340px; text-align: center;
+  }
+  #lock h1 { font-size: 1.5rem; margin-bottom: 4px; }
+  #lock h1 span { color: var(--accent); }
+  #lock p { color: var(--muted); font-size: 0.9rem; margin-bottom: 20px; }
+  #lock input {
+    width: 100%; padding: 10px 14px; border-radius: 8px; font-size: 1rem;
+    background: var(--bg); border: 1px solid var(--border); color: var(--text);
+  }
+  #lock input:focus { outline: none; border-color: var(--accent); }
+  #lock button {
+    width: 100%; margin-top: 12px; padding: 10px; border-radius: 8px; border: none;
+    background: var(--accent); color: #fff; font-size: 1rem; font-weight: 600; cursor: pointer;
+  }
+  #lock button:disabled { opacity: 0.6; cursor: wait; }
+  #lock .err { color: #f85149; font-size: 0.85rem; margin-top: 10px; min-height: 1.2em; }
+  .logout { display: block; margin-top: 18px; padding: 7px 10px; color: var(--muted); font-size: 0.85rem; text-decoration: none; }
+  .logout:hover { color: var(--text); }
+
   /* mobile */
   @media (max-width: 760px) {
     .layout { flex-direction: column; }
@@ -101,6 +127,17 @@
 </style>
 </head>
 <body>
+
+<div id="lock" style="display:none">
+  <div class="box">
+    <h1>🔒 Drease <span>v4</span></h1>
+    <p>เอกสารภายใน — ใส่รหัสผ่านเพื่อเข้าอ่าน</p>
+    <input id="pw" type="password" placeholder="รหัสผ่าน" autocomplete="current-password">
+    <button id="unlockBtn">เข้าสู่ระบบ</button>
+    <div class="err" id="lockErr"></div>
+  </div>
+</div>
+
 <div class="layout">
 
 <nav>
@@ -119,6 +156,7 @@
   <a class="doc" href="#CHANGELOG-frontend" data-file="CHANGELOG-frontend.md">🖥️ Frontend<small>เฉพาะฝั่ง React</small></a>
   <div class="group">อื่น ๆ</div>
   <a class="doc" href="#CLAUDE" data-file="CLAUDE.md">🤖 CLAUDE.md<small>กติกาสำหรับ AI</small></a>
+  <a class="logout" href="#" id="logoutBtn">🔓 ออกจากระบบ (ล้างรหัสจากเครื่องนี้)</a>
 </nav>
 
 <main>
@@ -131,6 +169,60 @@
 const docs = {};
 document.querySelectorAll("a.doc").forEach(a => { docs[a.hash.slice(1)] = a.dataset.file; });
 
+/* ---- ถอดรหัสเอกสาร (AES-256-GCM, กุญแจมาจากรหัสผ่านผ่าน PBKDF2) ---- */
+const PW_KEY = "drease_docs_pw";
+let docKey = null;
+const b64d = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+
+async function deriveDocKey(password, meta) {
+  const km = await crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveBits"]);
+  const bits = new Uint8Array(await crypto.subtle.deriveBits(
+    { name: "PBKDF2", salt: b64d(meta.salt), iterations: meta.iterations, hash: "SHA-256" }, km, 512));
+  return crypto.subtle.importKey("raw", bits.slice(0, 32), "AES-GCM", false, ["decrypt"]);
+}
+
+async function decryptDoc(obj) {
+  const pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64d(obj.iv) }, docKey, b64d(obj.ct));
+  return new TextDecoder().decode(pt);
+}
+
+async function tryUnlock(password) {
+  const meta = await (await fetch("docs/crypto.json", { cache: "no-cache" })).json();
+  const key = await deriveDocKey(password, meta);
+  try {
+    const pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64d(meta.check.iv) }, key, b64d(meta.check.ct));
+    if (new TextDecoder().decode(pt) !== "drease-docs-ok") return false;
+  } catch { return false; }
+  docKey = key;
+  localStorage.setItem(PW_KEY, password);
+  return true;
+}
+
+async function unlockFromUI() {
+  const btn = document.getElementById("unlockBtn");
+  const err = document.getElementById("lockErr");
+  const pw = document.getElementById("pw").value;
+  if (!pw) return;
+  btn.disabled = true; err.textContent = "";
+  const ok = await tryUnlock(pw).catch(() => false);
+  btn.disabled = false;
+  if (ok) {
+    document.getElementById("lock").style.display = "none";
+    load(location.hash.slice(1));
+  } else {
+    err.textContent = "รหัสผ่านไม่ถูกต้อง";
+    document.getElementById("pw").select();
+  }
+}
+
+document.getElementById("unlockBtn").addEventListener("click", unlockFromUI);
+document.getElementById("pw").addEventListener("keydown", e => { if (e.key === "Enter") unlockFromUI(); });
+document.getElementById("logoutBtn").addEventListener("click", e => {
+  e.preventDefault();
+  localStorage.removeItem(PW_KEY);
+  location.reload();
+});
+
 marked.setOptions({ gfm: true, breaks: false });
 mermaid.initialize({ startOnLoad: false, theme: "dark", themeVariables: { fontFamily: "Segoe UI, Noto Sans Thai, sans-serif" } });
 
@@ -141,9 +233,10 @@ async function load(key) {
   document.querySelectorAll("a.doc").forEach(a => a.classList.toggle("active", a.dataset.file === file));
   status.style.display = "block"; status.textContent = "กำลังโหลด…"; content.innerHTML = "";
   try {
-    const res = await fetch("docs/" + file, { cache: "no-cache" });
+    const res = await fetch("docs/" + file + ".enc", { cache: "no-cache" });
     if (!res.ok) throw new Error(res.status);
-    content.innerHTML = marked.parse(await res.text());
+    const text = await decryptDoc(await res.json());
+    content.innerHTML = marked.parse(text);
     status.style.display = "none";
 
     // รูปที่โหลดไม่ได้ (เช่น badge ของ repo private) — ซ่อนทิ้ง
@@ -191,7 +284,18 @@ async function load(key) {
 }
 
 window.addEventListener("hashchange", () => load(location.hash.slice(1)));
-load(location.hash.slice(1));
+
+// เริ่มต้น: ถ้ามีรหัสจำไว้ในเครื่อง ลองปลดล็อกเงียบ ๆ ไม่งั้นโชว์จอ login
+(async () => {
+  const saved = localStorage.getItem(PW_KEY);
+  if (saved && await tryUnlock(saved).catch(() => false)) {
+    load(location.hash.slice(1));
+  } else {
+    localStorage.removeItem(PW_KEY);
+    document.getElementById("lock").style.display = "flex";
+    document.getElementById("pw").focus();
+  }
+})();
 </script>
 </body>
 </html>
