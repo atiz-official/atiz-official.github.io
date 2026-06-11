@@ -3,10 +3,18 @@
 รวม git log ของทั้ง 2 โปรเจ็คในตารางเดียว (ล่าสุดอยู่บนสุด) — generate ด้วย `scripts\update-log.ps1`
 แยกรายโปรเจ็ค: [Backend](CHANGELOG-backend.md) | [Frontend](CHANGELOG-frontend.md)
 
-_อัปเดตล่าสุด: 2026-06-10 17:49_
+_อัปเดตล่าสุด: 2026-06-11 10:33_
 
 | วันที่ | โปรเจ็ค | Hash | ผู้แก้ | Branch | รายละเอียด |
 |---|---|---|---|---|---|
+| 2026-06-11 | Frontend | `e5a2723` | AomDev | `master` | merge: frontend/react-spa-scaffold -> master (recall rebuild + reports batch 1-2) |
+| 2026-06-11 | Frontend | `fa5cce3` | tanyarat-atiz | `frontend/react-spa-scaffold` | feat(recall): rebuild Recall page with scene KPI cards + filter grid (v3 layout) + reports polish |
+| 2026-06-11 | Backend | `c96819c` | AomDev | `master` | test: trigger realtime docs pipeline |
+| 2026-06-11 | Frontend | `8963a18` | AomDev | `frontend/react-spa-scaffold` | ci: remove notify workflow from this branch |
+| 2026-06-11 | Frontend | `0892a71` | AomDev | `frontend/react-spa-scaffold` | ci: notify control repo on every push |
+| 2026-06-11 | Frontend | `222e9f6` | AomDev | `master` | ci: notify control repo on every push |
+| 2026-06-11 | Backend | `b247287` | AomDev | `master` | ci: notify control repo on every push |
+| 2026-06-10 | Backend | `95a9e64` | FormDev | `master` | Revert "remove Redis" |
 | 2026-06-10 | Frontend | `d87dc63` | tanyarat-atiz | `frontend/react-spa-scaffold` | feat(reports): port batch 2 part 1 — operative, payment, appointment-stats, import |
 | 2026-06-10 | Frontend | `19de761` | tanyarat-atiz | `frontend/react-spa-scaffold` | docs(spec): add feature-based-restructure + reports-pages-port specs |
 | 2026-06-10 | Frontend | `fe05bcb` | tanyarat-atiz | `frontend/react-spa-scaffold` | feat(reports): fix 404 navigation + port batch 1 (oldbill/commission/df-report) |

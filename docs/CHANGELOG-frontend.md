@@ -1,9 +1,14 @@
 ﻿# Changelog — Frontend ([repo](https://github.com/atiz-official/drease-v4-frontend))
 
-_อัปเดตล่าสุด: 2026-06-10 17:49_ — กลับไป [ตารางรวม](CHANGELOG.md)
+_อัปเดตล่าสุด: 2026-06-11 10:33_ — กลับไป [ตารางรวม](CHANGELOG.md)
 
 | วันที่ | Hash | ผู้แก้ | Branch | รายละเอียด |
 |---|---|---|---|---|
+| 2026-06-11 | `e5a2723` | AomDev | `master` | merge: frontend/react-spa-scaffold -> master (recall rebuild + reports batch 1-2) |
+| 2026-06-11 | `fa5cce3` | tanyarat-atiz | `frontend/react-spa-scaffold` | feat(recall): rebuild Recall page with scene KPI cards + filter grid (v3 layout) + reports polish |
+| 2026-06-11 | `8963a18` | AomDev | `frontend/react-spa-scaffold` | ci: remove notify workflow from this branch |
+| 2026-06-11 | `0892a71` | AomDev | `frontend/react-spa-scaffold` | ci: notify control repo on every push |
+| 2026-06-11 | `222e9f6` | AomDev | `master` | ci: notify control repo on every push |
 | 2026-06-10 | `d87dc63` | tanyarat-atiz | `frontend/react-spa-scaffold` | feat(reports): port batch 2 part 1 — operative, payment, appointment-stats, import |
 | 2026-06-10 | `19de761` | tanyarat-atiz | `frontend/react-spa-scaffold` | docs(spec): add feature-based-restructure + reports-pages-port specs |
 | 2026-06-10 | `fe05bcb` | tanyarat-atiz | `frontend/react-spa-scaffold` | feat(reports): fix 404 navigation + port batch 1 (oldbill/commission/df-report) |
