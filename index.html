@@ -6,6 +6,7 @@
 <title>Drease v4 — Documentation</title>
 <meta name="description" content="เอกสารโปรเจ็ค Drease v4 — ระบบบริหารคลินิก โดย Atiz">
 <script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <style>
   :root {
     --bg: #0d1117;
@@ -86,6 +87,7 @@
   #content blockquote { border-left: 3px solid var(--accent); padding-left: 14px; color: var(--muted); margin-bottom: 1em; }
   #content hr { border: none; border-top: 1px solid var(--border); margin: 1.5em 0; }
   #content em { color: var(--muted); }
+  #content .mermaid { display: flex; justify-content: center; margin: 1.2em 0; }
 
   /* mobile */
   @media (max-width: 760px) {
@@ -126,6 +128,7 @@ const docs = {};
 document.querySelectorAll("a.doc").forEach(a => { docs[a.hash.slice(1)] = a.dataset.file; });
 
 marked.setOptions({ gfm: true, breaks: false });
+mermaid.initialize({ startOnLoad: false, theme: "dark", themeVariables: { fontFamily: "Segoe UI, Noto Sans Thai, sans-serif" } });
 
 async function load(key) {
   const file = docs[key] || docs["README"];
@@ -141,6 +144,17 @@ async function load(key) {
 
     // รูปที่โหลดไม่ได้ (เช่น badge ของ repo private) — ซ่อนทิ้ง
     content.querySelectorAll("img").forEach(img => img.onerror = () => img.remove());
+
+    // code block ภาษา mermaid → วาดเป็น diagram
+    content.querySelectorAll("pre code.language-mermaid").forEach((block, i) => {
+      const holder = document.createElement("div");
+      holder.className = "mermaid";
+      holder.textContent = block.textContent;
+      block.closest("pre").replaceWith(holder);
+    });
+    if (content.querySelector(".mermaid")) {
+      try { await mermaid.run({ nodes: content.querySelectorAll(".mermaid") }); } catch (e) { /* วาดไม่ได้ก็โชว์ข้อความดิบ */ }
+    }
 
     // คอลัมน์โปรเจ็คในตาราง changelog → ทำเป็น badge สีแยก (Frontend ฟ้า / Backend เขียว)
     content.querySelectorAll("table").forEach(table => {

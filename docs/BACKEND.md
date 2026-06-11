@@ -34,7 +34,35 @@ internal/
 
 ## การทำงานทีละขั้นตอน (request flow)
 
-ทุก request ที่เข้ามาเดินตามนี้:
+```mermaid
+flowchart TD
+    FE["🖥️ Frontend (React SPA)"] -- "HTTP + JWT" --> R
+
+    subgraph SRV["Backend — cmd/api (Gin :8090)"]
+        direction TB
+        R["router/<br/>ทะเบียน route ทั้งหมดที่เดียว"] --> M1["middleware ทั่วไป<br/>Recovery · Logger · CORS"]
+        M1 --> A["Auth<br/>ตรวจ JWT → แกะ claims"]
+        A --> T["TenantScope<br/>ฝัง clinic_code ลง context"]
+        T --> P["Perm (เฉพาะบางเส้น)<br/>เช่น doctor_fee.view"]
+        P --> C["controller/ (13 โดเมน)<br/>auth · patient · billing · clinical · cockpit ..."]
+        C --> Q["db/gen (sqlc)<br/>query แบบ type-safe"]
+        C --> H["httpx<br/>ตอบ JSON ฟอร์แมตเดียวกัน"]
+        C --> E["apperr<br/>error มาตรฐาน"]
+        AT["authtoken<br/>ออก/ตรวจ JWT (claim: clinic)"] -.-> A
+    end
+
+    Q --> PG[("PostgreSQL 16<br/>drease_temporary · ~80 ตาราง")]
+    SRV -.-> RD[("Redis 7<br/>cache")]
+
+    C -. "❌ ห้ามเขียน SQL สดใน controller — ต้องผ่าน sqlc" .-> PG
+    FE -. "❌ ห้ามแตะ DB ตรง — ผ่าน API เท่านั้น" .-> PG
+
+    style FE fill:#1f3a5f,stroke:#4493f8,color:#e6edf3
+    style PG fill:#1a2f1f,stroke:#3fb950,color:#e6edf3
+    style RD fill:#3a2a1a,stroke:#d29922,color:#e6edf3
+```
+
+อธิบายแต่ละขั้น:
 
 ```
 1) Request เข้า Gin
