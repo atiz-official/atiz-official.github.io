@@ -1,6 +1,6 @@
 ﻿# Changelog — Backend ([repo](https://github.com/atiz-official/drease-v4-backend))
 
-_อัปเดตล่าสุด: 2026-06-11 10:39_ — กลับไป [ตารางรวม](CHANGELOG.md)
+_อัปเดตล่าสุด: 2026-06-11 10:41_ — กลับไป [ตารางรวม](CHANGELOG.md)
 
 | วันที่ | Hash | ผู้แก้ | Branch | รายละเอียด |
 |---|---|---|---|---|

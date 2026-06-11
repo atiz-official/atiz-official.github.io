@@ -1,9 +1,10 @@
 ﻿# Changelog — Frontend ([repo](https://github.com/atiz-official/drease-v4-frontend))
 
-_อัปเดตล่าสุด: 2026-06-11 10:39_ — กลับไป [ตารางรวม](CHANGELOG.md)
+_อัปเดตล่าสุด: 2026-06-11 10:41_ — กลับไป [ตารางรวม](CHANGELOG.md)
 
 | วันที่ | Hash | ผู้แก้ | Branch | รายละเอียด |
 |---|---|---|---|---|
+| 2026-06-11 | `01d51d1` | AomDev | `master` | ci: print HTTP status + response in notify workflow for debugging |
 | 2026-06-11 | `e5a2723` | AomDev | `master` | merge: frontend/react-spa-scaffold -> master (recall rebuild + reports batch 1-2) |
 | 2026-06-11 | `fa5cce3` | tanyarat-atiz | `frontend/react-spa-scaffold` | feat(recall): rebuild Recall page with scene KPI cards + filter grid (v3 layout) + reports polish |
 | 2026-06-11 | `8963a18` | AomDev | `frontend/react-spa-scaffold` | ci: remove notify workflow from this branch |
