@@ -3,10 +3,11 @@
 รวม git log ของทั้ง 2 โปรเจ็คในตารางเดียว (ล่าสุดอยู่บนสุด) — generate ด้วย `scripts\update-log.ps1`
 แยกรายโปรเจ็ค: [Backend](CHANGELOG-backend.md) | [Frontend](CHANGELOG-frontend.md)
 
-_อัปเดตล่าสุด: 2026-06-11 10:41_
+_อัปเดตล่าสุด: 2026-06-11 10:43_
 
 | วันที่ | โปรเจ็ค | Hash | ผู้แก้ | Branch | รายละเอียด |
 |---|---|---|---|---|---|
+| 2026-06-11 | Frontend | `2842299` | AomDev | `master` | test: frontend push should appear on the website automatically |
 | 2026-06-11 | Frontend | `01d51d1` | AomDev | `master` | ci: print HTTP status + response in notify workflow for debugging |
 | 2026-06-11 | Backend | `cbbb518` | AomDev | `master` | ci: print HTTP status + response in notify workflow for debugging |
 | 2026-06-11 | Backend | `6b7b9c5` | AomDev | `master` | test: verify notify-to-website pipeline end to end |
