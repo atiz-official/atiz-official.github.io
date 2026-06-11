@@ -71,10 +71,11 @@
   #content td code { white-space: nowrap; } /* hash ไม่หักบรรทัด */
   /* ตาราง changelog: ผู้แก้ (คอลัมน์ 4) อยู่บรรทัดเดียว */
   #content td:nth-child(4), #content th:nth-child(4) { white-space: nowrap; }
-  /* branch (คอลัมน์ 5) ยอมให้หักบรรทัดถ้ายาว จะได้ไม่เบียดรายละเอียด */
+  /* branch (คอลัมน์ 5) พับได้ แต่ให้ที่กว้างขึ้นอีกนิด */
   #content td:nth-child(5) code { white-space: normal; }
-  /* รายละเอียด (คอลัมน์ 6) เป็นคอลัมน์ยืดหยุ่น กินที่เหลือ */
-  #content td:nth-child(6), #content th:nth-child(6) { min-width: 300px; }
+  #content td:nth-child(5), #content th:nth-child(5) { min-width: 150px; }
+  /* รายละเอียด (คอลัมน์ 6) เป็นคอลัมน์ยืดหยุ่น ขยายให้กว้างขึ้น */
+  #content td:nth-child(6), #content th:nth-child(6) { min-width: 380px; }
 
   /* badge สีแยกโปรเจ็คในตาราง changelog */
   .proj-badge {
