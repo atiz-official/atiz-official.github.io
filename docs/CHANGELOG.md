@@ -3,10 +3,11 @@
 รวม git log ของทั้ง 2 โปรเจ็คในตารางเดียว (ล่าสุดอยู่บนสุด) — generate ด้วย `scripts\update-log.ps1`
 แยกรายโปรเจ็ค: [Backend](CHANGELOG-backend.md) | [Frontend](CHANGELOG-frontend.md)
 
-_อัปเดตล่าสุด: 2026-06-11 15:24_
+_อัปเดตล่าสุด: 2026-06-11 15:28_
 
 | วันที่-เวลา | โปรเจ็ค | Hash | ผู้แก้ | Branch | รายละเอียด |
 |---|---|---|---|---|---|
+| 2026-06-11 15:27 | Backend | `2ca53a7` | tanyarat-atiz | `feat/auth-complete` | Merge origin/master into feat/auth-complete |
 | 2026-06-11 15:23 | Backend | `c86f759` | tanyarat-atiz | `feat/auth-complete` | feat(patient+appointment): complete concept port - CRUD, address lookups, calendar, cross-reservation (Tasks 4-5) |
 | 2026-06-11 15:19 | Frontend | `6903b20` | tanyarat-atiz | `frontend/react-spa-scaffold` | feat(auth): attach X-App-Key app card to every API request |
 | 2026-06-11 15:17 | Backend | `3a9f333` | tanyarat-atiz | `feat/auth-complete` | fix(cors): allow X-App-Key in preflight so browsers can send the app card |
