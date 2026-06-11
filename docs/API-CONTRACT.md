@@ -25,7 +25,7 @@ Auth: `public` ไม่ต้อง login | `JWT` ต้องแนบ token |
 | 🔴 | POST | `/auth/logout` | JWT | frontend เรียก แต่ backend ทำไว้ที่ `POST /logout` |
 | 🔴 | GET | `/auth/me` | JWT | frontend ใช้เช็ค session — backend ยังไม่มี |
 | 🔴 | GET | `/tenant/me` | JWT | frontend (`tenantService.ts`) ใช้โหลด config คลินิก — backend ยังไม่มี |
-| 🟡 | POST | `/login` | public | backend มีแล้ว (Auth.PostLogin) แต่ frontend เรียก `/auth/login` |
+| 🟡 | POST | `/login` | throttle | backend มีแล้ว (Auth.PostLogin, จำกัด 10 ครั้ง/นาที/IP) แต่ frontend เรียก `/auth/login` |
 | 🟡 | POST | `/logout` | public | backend มีแล้ว (Auth.PostLogout) |
 | 🟡 | GET | `/api/login/:user/:pass` | throttle | login แบบ legacy API |
 | 🟡 | GET | `/api/test/login/:user/:pass` | throttle | login ทดสอบ |

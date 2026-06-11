@@ -1,9 +1,10 @@
 ﻿# Changelog — Backend ([repo](https://github.com/atiz-official/drease-v4-backend))
 
-_อัปเดตล่าสุด: 2026-06-11 14:00_ — กลับไป [ตารางรวม](CHANGELOG.md)
+_อัปเดตล่าสุด: 2026-06-11 14:36_ — กลับไป [ตารางรวม](CHANGELOG.md)
 
 | วันที่-เวลา | Hash | ผู้แก้ | Branch | รายละเอียด |
 |---|---|---|---|---|
+| 2026-06-11 14:35 | `8dc227b` | tanyarat-atiz | `master` | feat(security): rate-limit POST /login (10 req/min per IP) |
 | 2026-06-11 13:58 | `9275a45` | tanyarat-atiz | `feat/auth-complete` | feat(tenant+auth): Phase 2 RLS net + complete auth concept (Task 2) |
 | 2026-06-11 13:15 | `8d93bc7` | atiz-official | `master` | Merge pull request #1 from atiz-official/feat/auth-complete |
 | 2026-06-11 13:13 | `bfce954` | tanyarat-atiz | `feat/auth-complete` | Merge remote-tracking branch 'origin/master' into feat/auth-complete |

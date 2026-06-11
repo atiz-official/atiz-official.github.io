@@ -36,6 +36,8 @@ sequenceDiagram
 
 ## ตอนที่ 1 — login: กรอกรหัสแล้วเกิดอะไร
 
+> 🛡️ เส้น login เป็น public โดยธรรมชาติ (ยังไม่มี token ก่อน login) แต่**ไม่ได้เปิดโล่ง**: มี rate limit **10 ครั้ง/นาที/IP** กันบอทเดารหัส, เทียบรหัสด้วย bcrypt (เดาแต่ละครั้งช้าและแพง), และข้อความ error ไม่บอกว่าอีเมลมีจริงไหม
+
 1. หน้า login เรียก `authService.login()` (ไฟล์ `src/services/authService.ts`) ส่ง `POST` พร้อม body `{ username, password }`
 2. backend (`internal/controller/auth/service.go`) ทำ 3 อย่าง:
    - หา user จากอีเมลในตาราง `users`
