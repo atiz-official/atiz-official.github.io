@@ -4,14 +4,6 @@
 
 _อัปเดตล่าสุด: 2026-06-11 — อิงโค้ดที่ commit `8d93bc7` (merge PR #1 `feat/auth-complete`)_
 
-## การเปลี่ยนแปลงสำคัญล่าสุด (จาก log ทุก branch)
-
-| เมื่อ | อะไร | ผล |
-|---|---|---|
-| 2026-06-11 | **PR #1 `feat/auth-complete` ถูก merge เข้า master** | ระบบ tenant isolation: เพิ่มคอลัมน์ `clinic_code` ในตาราง tenant ทั้งหมด (migration 0039), JWT พก claim `clinic`, middleware `TenantScope` |
-| 2026-06-10 | Revert "remove Redis" | **Redis 7 กลับมาอยู่ใน stack** (เคยถูกถอดออกไปวันเดียว) |
-| 2026-06-09 | เปลี่ยนชื่อ DB | ฐานข้อมูลชื่อ `drease_temporary` และตารางตัด prefix `v3_` ออกหมดแล้ว |
-
 ## Stack
 
 | ส่วน | ใช้อะไร |
