@@ -3,10 +3,11 @@
 รวม git log ของทั้ง 2 โปรเจ็คในตารางเดียว (ล่าสุดอยู่บนสุด) — generate ด้วย `scripts\update-log.ps1`
 แยกรายโปรเจ็ค: [Backend](CHANGELOG-backend.md) | [Frontend](CHANGELOG-frontend.md)
 
-_อัปเดตล่าสุด: 2026-06-11 14:36_
+_อัปเดตล่าสุด: 2026-06-11 15:09_
 
 | วันที่-เวลา | โปรเจ็ค | Hash | ผู้แก้ | Branch | รายละเอียด |
 |---|---|---|---|---|---|
+| 2026-06-11 15:09 | Backend | `c85e683` | tanyarat-atiz | `feat/auth-complete` | feat(auth): two-card auth - X-App-Key app layer + per-user rate limiting |
 | 2026-06-11 14:35 | Backend | `8dc227b` | tanyarat-atiz | `master` | feat(security): rate-limit POST /login (10 req/min per IP) |
 | 2026-06-11 13:58 | Backend | `9275a45` | tanyarat-atiz | `feat/auth-complete` | feat(tenant+auth): Phase 2 RLS net + complete auth concept (Task 2) |
 | 2026-06-11 13:15 | Backend | `8d93bc7` | atiz-official | `master` | Merge pull request #1 from atiz-official/feat/auth-complete |
