@@ -3,10 +3,11 @@
 รวม git log ของทั้ง 2 โปรเจ็คในตารางเดียว (ล่าสุดอยู่บนสุด) — generate ด้วย `scripts\update-log.ps1`
 แยกรายโปรเจ็ค: [Backend](CHANGELOG-backend.md) | [Frontend](CHANGELOG-frontend.md)
 
-_อัปเดตล่าสุด: 2026-06-11 13:15_
+_อัปเดตล่าสุด: 2026-06-11 13:16_
 
 | วันที่-เวลา | โปรเจ็ค | Hash | ผู้แก้ | Branch | รายละเอียด |
 |---|---|---|---|---|---|
+| 2026-06-11 13:15 | Backend | `8d93bc7` | atiz-official | `master` | Merge pull request #1 from atiz-official/feat/auth-complete |
 | 2026-06-11 13:13 | Backend | `bfce954` | tanyarat-atiz | `feat/auth-complete` | Merge remote-tracking branch 'origin/master' into feat/auth-complete |
 | 2026-06-11 12:55 | Backend | `6e42136` | tanyarat-atiz | `feat/auth-complete` | feat(tenant): clinic_code isolation - migration 0039, JWT claim, TenantScope, Phase 1 query scoping |
 | 2026-06-11 10:43 | Frontend | `2842299` | AomDev | `master` | test: frontend push should appear on the website automatically |
