@@ -3,7 +3,7 @@
 ตารางกลางบอกว่า endpoint ไหน **backend มีแล้ว / frontend เรียกแล้ว / เชื่อมถึงกันหรือยัง** — ครบทุกเส้น
 อัปเดตด้วยมือเมื่อมีการเพิ่ม route (backend: `internal/router/router.go`, frontend: `src/services/*.ts`)
 
-_อัปเดตล่าสุด: 2026-06-10 — backend @`5fc3b7c`, frontend @`d87dc63` (branch `frontend/react-spa-scaffold`)_
+_อัปเดตล่าสุด: 2026-06-11 — backend @`8d93bc7` (merge feat/auth-complete — route ไม่เปลี่ยน แต่ JWT พก claim `clinic` แล้ว), frontend @`e5a2723` (master)_
 
 สถานะ: ✅ เชื่อมแล้ว | 🟡 backend มีแต่ frontend ยังไม่เรียก | 🔴 frontend เรียกแต่ backend ยังไม่มี
 
