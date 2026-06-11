@@ -3,11 +3,19 @@
 ตารางกลางบอกว่า endpoint ไหน **backend มีแล้ว / frontend เรียกแล้ว / เชื่อมถึงกันหรือยัง** — ครบทุกเส้น
 อัปเดตด้วยมือเมื่อมีการเพิ่ม route (backend: `internal/router/router.go`, frontend: `src/services/*.ts`)
 
-_อัปเดตล่าสุด: 2026-06-11 — backend @`8d93bc7` (merge feat/auth-complete — route ไม่เปลี่ยน แต่ JWT พก claim `clinic` แล้ว), frontend @`e5a2723` (master)_
+_อัปเดตล่าสุด: 2026-06-11 — backend @`c85e683` (`feat/auth-complete` — auth สองชั้น X-App-Key + JWT และ rate limit ครบทุกเส้น), frontend @`e5a2723` (master)_
 
 สถานะ: ✅ เชื่อมแล้ว | 🟡 backend มีแต่ frontend ยังไม่เรียก | 🔴 frontend เรียกแต่ backend ยังไม่มี
 
-Auth: `public` ไม่ต้อง login | `JWT` ต้องแนบ token | `JWT+perm` ต้องมีสิทธิ์เพิ่ม | `throttle` จำกัด 10 ครั้ง/นาที
+Auth (ระบบสองบัตร — ดูรายละเอียด [API-FLOW.md](API-FLOW.md)):
+- `public` — ไม่ต้องส่งอะไร (เฉพาะ health check)
+- `app-key` — ส่ง `X-App-Key` (บัตรแอป ใบที่ 1) — เส้นสาธารณะที่เรียกจากแอปของเราเท่านั้น
+- `URL-token` — ลิงก์จากอีเมล/LINE ที่ auth ฝังใน URL (ส่ง header ไม่ได้)
+- `JWT` — ส่ง **สองบัตร**: `X-App-Key` + `Authorization: Bearer <token>` | `JWT+perm` ต้องมีสิทธิ์เพิ่ม
+
+Rate limit: กลุ่มเดารหัส (login/reset/OTP) 10 ครั้ง/นาที/IP แชร์ร่วมกัน · เส้น app-key อื่น 120/นาที/IP · เส้น JWT 300/นาที/**user** — เกินได้ `429` + `Retry-After`
+
+> ⚠️ ช่วง rollout: `APP_AUTH_ENFORCE=false` (log-only) — ยังไม่บังคับ `X-App-Key` จนกว่า frontend จะส่ง header ครบทุกตัว (`AUTH_ENFORCE` คุมชั้น JWT แบบเดียวกัน)
 
 ## Health / ระบบ
 
@@ -15,7 +23,7 @@ Auth: `public` ไม่ต้อง login | `JWT` ต้องแนบ token |
 |---|---|---|---|---|
 | 🟡 | GET | `/` | public | root (Health.Root) |
 | 🟡 | GET | `/healthz` | public | health check — ใช้เช็คว่า API ขึ้นแล้ว |
-| 🟡 | POST | `/v3/error-log` | public | telemetry: รับ error log จาก client |
+| 🟡 | POST | `/v3/error-log` | app-key | telemetry: รับ error log จาก client |
 
 ## Auth / Login
 
@@ -25,10 +33,10 @@ Auth: `public` ไม่ต้อง login | `JWT` ต้องแนบ token |
 | 🔴 | POST | `/auth/logout` | JWT | frontend เรียก แต่ backend ทำไว้ที่ `POST /logout` |
 | 🔴 | GET | `/auth/me` | JWT | frontend ใช้เช็ค session — backend ยังไม่มี |
 | 🔴 | GET | `/tenant/me` | JWT | frontend (`tenantService.ts`) ใช้โหลด config คลินิก — backend ยังไม่มี |
-| 🟡 | POST | `/login` | throttle | backend มีแล้ว (Auth.PostLogin, จำกัด 10 ครั้ง/นาที/IP) แต่ frontend เรียก `/auth/login` |
-| 🟡 | POST | `/logout` | public | backend มีแล้ว (Auth.PostLogout) |
-| 🟡 | GET | `/api/login/:user/:pass` | throttle | login แบบ legacy API |
-| 🟡 | GET | `/api/test/login/:user/:pass` | throttle | login ทดสอบ |
+| 🟡 | POST | `/login` | app-key | backend มีแล้ว (Auth.PostLogin, โควต้าเดารหัส 10 ครั้ง/นาที/IP) แต่ frontend เรียก `/auth/login` |
+| 🟡 | POST | `/logout` | app-key | backend มีแล้ว (Auth.PostLogout) |
+| 🟡 | GET | `/api/login/:user/:pass` | app-key | login แบบ legacy API (โควต้าเดารหัสร่วมกับ /login) |
+| 🟡 | GET | `/api/test/login/:user/:pass` | app-key | login ทดสอบ (โควต้าเดารหัสร่วมกับ /login) |
 
 ## Patient (`/api/*` — Node API เดิม)
 
