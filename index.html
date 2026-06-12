@@ -39,7 +39,7 @@
   nav summary.group::after { content: "▸"; display: inline-block; margin-left: 6px; transition: transform 0.15s; }
   nav details[open] summary.group::after { transform: rotate(90deg); }
   nav summary.group:hover { color: var(--text); }
-  nav details a.doc + a.doc { padding-left: 26px; } /* รายการลูกใต้ DB Design เยื้องเข้าแทนเครื่องหมาย └ */
+  nav #dbGroup a.doc + a.doc { padding-left: 26px; } /* รายการลูกใต้ DB Design เยื้องเข้าแทนเครื่องหมาย └ (เฉพาะ Database — Document ไม่มีตัวแม่) */
   nav a.doc {
     display: block; padding: 7px 10px; border-radius: 8px;
     color: var(--text); text-decoration: none; font-size: 0.95rem;
@@ -193,15 +193,18 @@
   <a class="doc" href="#README" data-file="README.md">📘 README<small>ภาพรวมระบบ + วิธีรัน</small></a>
   <a class="doc" href="#TASKS" data-file="TASKS.md">📋 Tasks<small>ใครโฟกัสอะไร + อะไรเสร็จ/ค้าง</small></a>
   <a class="doc" href="#AUTH-PLAN" data-file="AUTH-PLAN.md">🗝️ แผน Login/Auth<small>โฟกัส #1 — มติ + 5 เฟส + เคสทดสอบ</small></a>
+  <div class="group">Changelog</div>
+  <a class="doc" href="#CHANGELOG" data-file="CHANGELOG.md">📜 รวม 2 โปรเจ็ค<small>ใครแก้อะไร เรียงล่าสุด</small></a>
+  <a class="doc" href="#CHANGELOG-backend" data-file="CHANGELOG-backend.md">⚙️ Backend<small>เฉพาะฝั่ง Go API</small></a>
+  <a class="doc" href="#CHANGELOG-frontend" data-file="CHANGELOG-frontend.md">🖥️ Frontend<small>เฉพาะฝั่ง React</small></a>
+  <details id="docGroup">
+  <summary class="group">Document</summary>
   <a class="doc" href="#BACKEND" data-file="BACKEND.md">🏗️ โครงสร้าง Backend<small>ตาราง DB + request flow</small></a>
   <a class="doc" href="#FRONTEND" data-file="FRONTEND.md">🖥️ โครงสร้าง Frontend<small>feature-based + tenant + กฎ import</small></a>
   <a class="doc" href="#API-FLOW" data-file="API-FLOW.md">🔐 API Flow<small>จาก login ถึง DB + multi-tenant</small></a>
   <a class="doc" href="#API-SIMULATION" data-file="API-SIMULATION.md">🎬 จำลองการใช้งาน<small>request/response จริง 2 ระดับ auth</small></a>
   <a class="doc" href="#API-CONTRACT" data-file="API-CONTRACT.md">🔌 API Contract<small>สถานะ endpoint ทุกเส้น</small></a>
-  <div class="group">Changelog</div>
-  <a class="doc" href="#CHANGELOG" data-file="CHANGELOG.md">📜 รวม 2 โปรเจ็ค<small>ใครแก้อะไร เรียงล่าสุด</small></a>
-  <a class="doc" href="#CHANGELOG-backend" data-file="CHANGELOG-backend.md">⚙️ Backend<small>เฉพาะฝั่ง Go API</small></a>
-  <a class="doc" href="#CHANGELOG-frontend" data-file="CHANGELOG-frontend.md">🖥️ Frontend<small>เฉพาะฝั่ง React</small></a>
+  </details>
   <details id="dbGroup">
   <summary class="group">Database</summary>
   <a class="doc" href="#DB-DESIGN" data-file="DB-DESIGN.md">🗄️ DB Design<small>ผัง ER + แผน PK/FK multi-tenant</small></a>
@@ -228,10 +231,9 @@
 const docs = {};
 document.querySelectorAll("a.doc").forEach(a => { docs[a.hash.slice(1)] = a.dataset.file; });
 
-// มือถือซ่อนหัวข้อ group (รวม summary) — ต้องกางหมวด Database ค้างไว้ ไม่งั้นกดลิงก์ข้างในไม่ได้
+// มือถือซ่อนหัวข้อ group (รวม summary) — ต้องกางหมวดพับเก็บได้ทุกหมวดค้างไว้ ไม่งั้นกดลิงก์ข้างในไม่ได้
 if (matchMedia("(max-width: 760px)").matches) {
-  const d = document.getElementById("dbGroup");
-  if (d) d.open = true;
+  document.querySelectorAll("nav details").forEach(d => { d.open = true; });
 }
 
 /* ---- ถอดรหัสเอกสาร (AES-256-GCM, กุญแจมาจากรหัสผ่านผ่าน PBKDF2) ---- */
@@ -366,9 +368,10 @@ async function load(key) {
   const status = document.getElementById("status");
   const content = document.getElementById("content");
   document.querySelectorAll("a.doc").forEach(a => a.classList.toggle("active", a.dataset.file === file));
-  // ถ้าหน้าที่เปิดอยู่อยู่ในหมวด Database ให้กางหมวดอัตโนมัติ
-  const dbGroup = document.getElementById("dbGroup");
-  if (dbGroup && dbGroup.querySelector("a.doc.active")) dbGroup.open = true;
+  // ถ้าหน้าที่เปิดอยู่อยู่ในหมวดพับเก็บได้ (Document/Database) ให้กางหมวดนั้นอัตโนมัติ
+  document.querySelectorAll("nav details").forEach(d => {
+    if (d.querySelector("a.doc.active")) d.open = true;
+  });
   status.style.display = "block"; status.textContent = "กำลังโหลด…"; content.innerHTML = "";
   try {
     const res = await fetch("docs/" + file + ".enc", { cache: "no-cache" });
