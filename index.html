@@ -104,6 +104,26 @@
   #content hr { border: none; border-top: 1px solid var(--border); margin: 1.5em 0; }
   #content em { color: var(--muted); }
   #content .mermaid { display: flex; justify-content: center; margin: 1.2em 0; }
+  #content .mermaid svg { cursor: zoom-in; }
+
+  /* ---- จอดูผังแบบซูม/แพน ---- */
+  #zoomer {
+    position: fixed; inset: 0; z-index: 60; background: rgba(8,10,14,0.96);
+    display: flex; flex-direction: column;
+  }
+  #zoomer .zbar {
+    display: flex; gap: 8px; align-items: center; justify-content: flex-end;
+    padding: 10px 16px; background: var(--panel); border-bottom: 1px solid var(--border);
+  }
+  #zoomer .zbar .zhint { margin-right: auto; color: var(--muted); font-size: 0.85rem; }
+  #zoomer .zbar button {
+    background: #21262d; border: 1px solid var(--border); color: var(--text);
+    border-radius: 8px; min-width: 42px; height: 36px; font-size: 1rem; cursor: pointer; padding: 0 12px;
+  }
+  #zoomer .zbar button:hover { background: #30363d; }
+  .zview { flex: 1; overflow: hidden; position: relative; cursor: grab; touch-action: none; }
+  .zview.dragging { cursor: grabbing; }
+  .zview svg { position: absolute; top: 0; left: 0; transform-origin: 0 0; max-width: none !important; }
 
   /* ---- จอ login ---- */
   #lock {
@@ -152,6 +172,17 @@
     <button id="unlockBtn">เข้าสู่ระบบ</button>
     <div class="err" id="lockErr"></div>
   </div>
+</div>
+
+<div id="zoomer" style="display:none">
+  <div class="zbar">
+    <span class="zhint">ลากเพื่อเลื่อน · ลูกกลิ้งเมาส์เพื่อซูม · Esc เพื่อปิด</span>
+    <button data-z="out" title="ซูมออก">−</button>
+    <button data-z="in" title="ซูมเข้า">+</button>
+    <button data-z="fit" title="ย่อให้พอดีจอ">⤢ พอดีจอ</button>
+    <button data-z="close" title="ปิด">✕</button>
+  </div>
+  <div class="zview" id="zview"></div>
 </div>
 
 <div class="layout">
@@ -259,6 +290,76 @@ document.getElementById("logoutBtn").addEventListener("click", e => {
 marked.setOptions({ gfm: true, breaks: false });
 mermaid.initialize({ startOnLoad: false, theme: "dark", themeVariables: { fontFamily: "Segoe UI, Noto Sans Thai, sans-serif" } });
 
+/* ---- จอดูผังแบบซูม/แพน (คลิกผัง mermaid เพื่อเปิด) ---- */
+const zoomer = document.getElementById("zoomer");
+const zview = document.getElementById("zview");
+let zs = 1, zx = 0, zy = 0, zsvg = null;
+
+function zApply() { if (zsvg) zsvg.style.transform = `translate(${zx}px, ${zy}px) scale(${zs})`; }
+
+function zFit() {
+  if (!zsvg) return;
+  const w = parseFloat(zsvg.style.width), h = parseFloat(zsvg.style.height);
+  zs = Math.min(zview.clientWidth / w, zview.clientHeight / h, 2) * 0.95;
+  zx = (zview.clientWidth - w * zs) / 2;
+  zy = (zview.clientHeight - h * zs) / 2;
+  zApply();
+}
+
+function zZoom(factor, cx, cy) {
+  const ns = Math.min(Math.max(zs * factor, 0.15), 10);
+  zx = cx - (cx - zx) * (ns / zs);
+  zy = cy - (cy - zy) * (ns / zs);
+  zs = ns; zApply();
+}
+
+function openZoom(svgEl) {
+  zview.innerHTML = "";
+  zsvg = svgEl.cloneNode(true);
+  const vb = zsvg.viewBox && zsvg.viewBox.baseVal;
+  const w = vb && vb.width ? vb.width : svgEl.getBoundingClientRect().width || 800;
+  const h = vb && vb.height ? vb.height : svgEl.getBoundingClientRect().height || 600;
+  zsvg.removeAttribute("width"); zsvg.removeAttribute("height");
+  zsvg.style.width = w + "px"; zsvg.style.height = h + "px";
+  zsvg.style.cursor = "inherit";
+  zview.appendChild(zsvg);
+  zoomer.style.display = "flex";
+  zFit();
+}
+
+function closeZoom() { zoomer.style.display = "none"; zview.innerHTML = ""; zsvg = null; }
+
+zoomer.querySelectorAll(".zbar button").forEach(b => b.addEventListener("click", () => {
+  const cx = zview.clientWidth / 2, cy = zview.clientHeight / 2;
+  if (b.dataset.z === "in") zZoom(1.3, cx, cy);
+  else if (b.dataset.z === "out") zZoom(0.77, cx, cy);
+  else if (b.dataset.z === "fit") zFit();
+  else closeZoom();
+}));
+
+zview.addEventListener("wheel", e => {
+  e.preventDefault();
+  const r = zview.getBoundingClientRect();
+  zZoom(e.deltaY < 0 ? 1.15 : 0.87, e.clientX - r.left, e.clientY - r.top);
+}, { passive: false });
+
+let zdrag = null;
+zview.addEventListener("pointerdown", e => {
+  zdrag = { x: e.clientX - zx, y: e.clientY - zy };
+  zview.setPointerCapture(e.pointerId);
+  zview.classList.add("dragging");
+});
+zview.addEventListener("pointermove", e => {
+  if (!zdrag) return;
+  zx = e.clientX - zdrag.x; zy = e.clientY - zdrag.y; zApply();
+});
+["pointerup", "pointercancel"].forEach(ev => zview.addEventListener(ev, () => {
+  zdrag = null; zview.classList.remove("dragging");
+}));
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && zoomer.style.display !== "none") closeZoom();
+});
+
 async function load(key) {
   const file = docs[key] || docs["README"];
   const status = document.getElementById("status");
@@ -287,6 +388,10 @@ async function load(key) {
     });
     if (content.querySelector(".mermaid")) {
       try { await mermaid.run({ nodes: content.querySelectorAll(".mermaid") }); } catch (e) { /* วาดไม่ได้ก็โชว์ข้อความดิบ */ }
+      // คลิกผังเพื่อเปิดดูแบบซูม/แพน
+      content.querySelectorAll(".mermaid svg").forEach(svg => {
+        svg.addEventListener("click", () => openZoom(svg));
+      });
     }
 
     // คอลัมน์โปรเจ็คในตาราง changelog → ทำเป็น badge สีแยก (Frontend ฟ้า / Backend เขียว)
