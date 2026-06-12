@@ -191,7 +191,8 @@
   <div class="brand">Drease <span>v4</span><small>Documentation — drease-v4-control</small></div>
   <div class="group">ภาพรวม</div>
   <a class="doc" href="#README" data-file="README.md">📘 README<small>ภาพรวมระบบ + วิธีรัน</small></a>
-  <a class="doc" href="#TASKS" data-file="TASKS.md">📋 Tasks<small>อะไรเสร็จ/ค้าง ทั้งระบบ</small></a>
+  <a class="doc" href="#TASKS" data-file="TASKS.md">📋 Tasks<small>ใครโฟกัสอะไร + อะไรเสร็จ/ค้าง</small></a>
+  <a class="doc" href="#AUTH-PLAN" data-file="AUTH-PLAN.md">🗝️ แผน Login/Auth<small>โฟกัส #1 — มติ + 5 เฟส + เคสทดสอบ</small></a>
   <a class="doc" href="#BACKEND" data-file="BACKEND.md">🏗️ โครงสร้าง Backend<small>ตาราง DB + request flow</small></a>
   <a class="doc" href="#FRONTEND" data-file="FRONTEND.md">🖥️ โครงสร้าง Frontend<small>feature-based + tenant + กฎ import</small></a>
   <a class="doc" href="#API-FLOW" data-file="API-FLOW.md">🔐 API Flow<small>จาก login ถึง DB + multi-tenant</small></a>
@@ -411,9 +412,10 @@ async function load(key) {
     // ลิงก์ .md ภายใน → เปิดในตัวอ่านนี้แทน
     content.querySelectorAll("a").forEach(a => {
       const href = a.getAttribute("href") || "";
-      if (href.endsWith(".md")) {
+      const pathPart = href.split("#")[0]; // ตัด anchor ทิ้ง (เช่น AUTH-PLAN.md#phase-1) — ตัวอ่านนี้เปิดทั้งหน้า
+      if (pathPart.endsWith(".md")) {
         // ไฟล์ใน db-design/ ถูก sync ขึ้นเว็บแบบ flat ชื่อ DB-DESIGN-<ชื่อ>.md — แปลง path ก่อนจับคู่
-        const norm = href.replace(/^(\.\.\/|\.\/)+/, "").replace(/^db-design\//, "DB-DESIGN-");
+        const norm = pathPart.replace(/^(\.\.\/|\.\/)+/, "").replace(/^db-design\//, "DB-DESIGN-");
         const key = Object.keys(docs).find(k => norm.endsWith(docs[k]) || norm === docs[k]);
         if (key) { a.href = "#" + key; a.onclick = null; }
       } else if (href.startsWith("http")) {
