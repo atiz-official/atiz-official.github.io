@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="th">
 <head>
 <meta charset="UTF-8">
@@ -39,6 +39,7 @@
   nav summary.group::after { content: "▸"; display: inline-block; margin-left: 6px; transition: transform 0.15s; }
   nav details[open] summary.group::after { transform: rotate(90deg); }
   nav summary.group:hover { color: var(--text); }
+  nav details a.doc + a.doc { padding-left: 26px; } /* รายการลูกใต้ DB Design เยื้องเข้าแทนเครื่องหมาย └ */
   nav a.doc {
     display: block; padding: 7px 10px; border-radius: 8px;
     color: var(--text); text-decoration: none; font-size: 0.95rem;
@@ -172,13 +173,13 @@
   <details id="dbGroup">
   <summary class="group">Database</summary>
   <a class="doc" href="#DB-DESIGN" data-file="DB-DESIGN.md">🗄️ DB Design<small>ผัง ER + แผน PK/FK multi-tenant</small></a>
-  <a class="doc" href="#DB-00-core" data-file="DB-DESIGN-00-core.md">&nbsp;&nbsp;└ ตารางแกน<small>clinic · patient · doctor · users</small></a>
-  <a class="doc" href="#DB-01-appointment" data-file="DB-DESIGN-01-appointment.md">&nbsp;&nbsp;└ นัดหมาย / คิว<small>10 ตาราง ทุกคอลัมน์</small></a>
-  <a class="doc" href="#DB-02-clinical" data-file="DB-DESIGN-02-clinical.md">&nbsp;&nbsp;└ เวชระเบียน<small>26 ตาราง ทุกคอลัมน์</small></a>
-  <a class="doc" href="#DB-03-consent" data-file="DB-DESIGN-03-consent-files.md">&nbsp;&nbsp;└ เอกสาร / Consent<small>7 ตาราง ทุกคอลัมน์</small></a>
-  <a class="doc" href="#DB-04-billing" data-file="DB-DESIGN-04-billing.md">&nbsp;&nbsp;└ การเงิน / POS / EDC<small>24 ตาราง ทุกคอลัมน์</small></a>
-  <a class="doc" href="#DB-05-stock" data-file="DB-DESIGN-05-stock-course.md">&nbsp;&nbsp;└ สต๊อก / คอร์ส<small>7 ตาราง ทุกคอลัมน์</small></a>
-  <a class="doc" href="#DB-06-system" data-file="DB-DESIGN-06-system.md">&nbsp;&nbsp;└ ระบบ / AI<small>11 ตาราง ทุกคอลัมน์</small></a>
+  <a class="doc" href="#DB-00-core" data-file="DB-DESIGN-00-core.md">ตารางแกน<small>clinic · patient · doctor · users</small></a>
+  <a class="doc" href="#DB-01-appointment" data-file="DB-DESIGN-01-appointment.md">นัดหมาย / คิว<small>10 ตาราง ทุกคอลัมน์</small></a>
+  <a class="doc" href="#DB-02-clinical" data-file="DB-DESIGN-02-clinical.md">เวชระเบียน<small>26 ตาราง ทุกคอลัมน์</small></a>
+  <a class="doc" href="#DB-03-consent" data-file="DB-DESIGN-03-consent-files.md">เอกสาร / Consent<small>7 ตาราง ทุกคอลัมน์</small></a>
+  <a class="doc" href="#DB-04-billing" data-file="DB-DESIGN-04-billing.md">การเงิน / POS / EDC<small>24 ตาราง ทุกคอลัมน์</small></a>
+  <a class="doc" href="#DB-05-stock" data-file="DB-DESIGN-05-stock-course.md">สต๊อก / คอร์ส<small>7 ตาราง ทุกคอลัมน์</small></a>
+  <a class="doc" href="#DB-06-system" data-file="DB-DESIGN-06-system.md">ระบบ / AI<small>11 ตาราง ทุกคอลัมน์</small></a>
   </details>
   <div class="group">อื่น ๆ</div>
   <a class="doc" href="#CLAUDE" data-file="CLAUDE.md">🤖 CLAUDE.md<small>กติกาสำหรับ AI</small></a>
