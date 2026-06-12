@@ -192,7 +192,6 @@
   <div class="group">ภาพรวม</div>
   <a class="doc" href="#README" data-file="README.md">📘 README<small>ภาพรวมระบบ + วิธีรัน</small></a>
   <a class="doc" href="#TASKS" data-file="TASKS.md">📋 Tasks<small>ใครโฟกัสอะไร + อะไรเสร็จ/ค้าง</small></a>
-  <a class="doc" href="#AUTH-PLAN" data-file="AUTH-PLAN.md">🗝️ แผน Login/Auth<small>โฟกัส #1 — มติ + 5 เฟส + เคสทดสอบ</small></a>
   <div class="group">Changelog</div>
   <a class="doc" href="#CHANGELOG" data-file="CHANGELOG.md">📜 รวม 2 โปรเจ็ค<small>ใครแก้อะไร เรียงล่าสุด</small></a>
   <a class="doc" href="#CHANGELOG-backend" data-file="CHANGELOG-backend.md">⚙️ Backend<small>เฉพาะฝั่ง Go API</small></a>
@@ -230,6 +229,8 @@
 <script>
 const docs = {};
 document.querySelectorAll("a.doc").forEach(a => { docs[a.hash.slice(1)] = a.dataset.file; });
+// เอกสารที่ไม่มีแท็บใน sidebar — เปิดผ่านลิงก์จากหน้าอื่น (เช่นแถวโฟกัสใน Tasks) หรือพิมพ์ hash ตรง ๆ
+docs["AUTH-PLAN"] = "AUTH-PLAN.md";
 
 // มือถือซ่อนหัวข้อ group (รวม summary) — ต้องกางหมวดพับเก็บได้ทุกหมวดค้างไว้ ไม่งั้นกดลิงก์ข้างในไม่ได้
 if (matchMedia("(max-width: 760px)").matches) {
