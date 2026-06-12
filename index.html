@@ -33,6 +33,12 @@
   nav .brand span { color: var(--accent); }
   nav .brand small { display: block; color: var(--muted); font-weight: 400; font-size: 0.78rem; }
   nav .group { color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; padding: 14px 10px 4px; }
+  /* หมวด Database พับเก็บได้ */
+  nav summary.group { cursor: pointer; list-style: none; user-select: none; }
+  nav summary.group::-webkit-details-marker { display: none; }
+  nav summary.group::after { content: "▸"; display: inline-block; margin-left: 6px; transition: transform 0.15s; }
+  nav details[open] summary.group::after { transform: rotate(90deg); }
+  nav summary.group:hover { color: var(--text); }
   nav a.doc {
     display: block; padding: 7px 10px; border-radius: 8px;
     color: var(--text); text-decoration: none; font-size: 0.95rem;
@@ -163,7 +169,8 @@
   <a class="doc" href="#CHANGELOG" data-file="CHANGELOG.md">📜 รวม 2 โปรเจ็ค<small>ใครแก้อะไร เรียงล่าสุด</small></a>
   <a class="doc" href="#CHANGELOG-backend" data-file="CHANGELOG-backend.md">⚙️ Backend<small>เฉพาะฝั่ง Go API</small></a>
   <a class="doc" href="#CHANGELOG-frontend" data-file="CHANGELOG-frontend.md">🖥️ Frontend<small>เฉพาะฝั่ง React</small></a>
-  <div class="group">Database</div>
+  <details id="dbGroup">
+  <summary class="group">Database</summary>
   <a class="doc" href="#DB-DESIGN" data-file="DB-DESIGN.md">🗄️ DB Design<small>ผัง ER + แผน PK/FK multi-tenant</small></a>
   <a class="doc" href="#DB-00-core" data-file="DB-DESIGN-00-core.md">&nbsp;&nbsp;└ ตารางแกน<small>clinic · patient · doctor · users</small></a>
   <a class="doc" href="#DB-01-appointment" data-file="DB-DESIGN-01-appointment.md">&nbsp;&nbsp;└ นัดหมาย / คิว<small>10 ตาราง ทุกคอลัมน์</small></a>
@@ -172,6 +179,7 @@
   <a class="doc" href="#DB-04-billing" data-file="DB-DESIGN-04-billing.md">&nbsp;&nbsp;└ การเงิน / POS / EDC<small>24 ตาราง ทุกคอลัมน์</small></a>
   <a class="doc" href="#DB-05-stock" data-file="DB-DESIGN-05-stock-course.md">&nbsp;&nbsp;└ สต๊อก / คอร์ส<small>7 ตาราง ทุกคอลัมน์</small></a>
   <a class="doc" href="#DB-06-system" data-file="DB-DESIGN-06-system.md">&nbsp;&nbsp;└ ระบบ / AI<small>11 ตาราง ทุกคอลัมน์</small></a>
+  </details>
   <div class="group">อื่น ๆ</div>
   <a class="doc" href="#CLAUDE" data-file="CLAUDE.md">🤖 CLAUDE.md<small>กติกาสำหรับ AI</small></a>
   <a class="logout" href="#" id="logoutBtn">🔓 ออกจากระบบ (ล้างรหัสจากเครื่องนี้)</a>
@@ -186,6 +194,12 @@
 <script>
 const docs = {};
 document.querySelectorAll("a.doc").forEach(a => { docs[a.hash.slice(1)] = a.dataset.file; });
+
+// มือถือซ่อนหัวข้อ group (รวม summary) — ต้องกางหมวด Database ค้างไว้ ไม่งั้นกดลิงก์ข้างในไม่ได้
+if (matchMedia("(max-width: 760px)").matches) {
+  const d = document.getElementById("dbGroup");
+  if (d) d.open = true;
+}
 
 /* ---- ถอดรหัสเอกสาร (AES-256-GCM, กุญแจมาจากรหัสผ่านผ่าน PBKDF2) ---- */
 const PW_KEY = "drease_docs_pw";
@@ -249,6 +263,9 @@ async function load(key) {
   const status = document.getElementById("status");
   const content = document.getElementById("content");
   document.querySelectorAll("a.doc").forEach(a => a.classList.toggle("active", a.dataset.file === file));
+  // ถ้าหน้าที่เปิดอยู่อยู่ในหมวด Database ให้กางหมวดอัตโนมัติ
+  const dbGroup = document.getElementById("dbGroup");
+  if (dbGroup && dbGroup.querySelector("a.doc.active")) dbGroup.open = true;
   status.style.display = "block"; status.textContent = "กำลังโหลด…"; content.innerHTML = "";
   try {
     const res = await fetch("docs/" + file + ".enc", { cache: "no-cache" });
